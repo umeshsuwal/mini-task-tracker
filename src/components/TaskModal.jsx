@@ -5,9 +5,18 @@ export default function TaskModal({ task, onClose, onSave }) {
   const [dueDate, setDueDate] = useState(task.dueDate || "");
   const [status, setStatus] = useState(task.status || "pending");
 
+const CurrentDate = new Date().toISOString().split("T")[0];
+
+const validDueDate = (dueDate) => {
+  if (dueDate < CurrentDate) {
+    console.log("Due date cannot be in the past.");
+}
+}
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave({ ...task, title, dueDate, status });
+    validDueDate(e);
   };
 
   return (
